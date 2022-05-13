@@ -16,7 +16,7 @@ class CreateSlotGamesConfigTable extends Migration
         Schema::create('slot_games_config', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('gid')->unique()->default('0')->comment('游戏id');
-            $table->string('gname')->default('''')->comment('游戏名称');
+            $table->string('gname')->default('')->comment('游戏名称');
             $table->integer('sort')->default('0')->comment('排序id');
             $table->timestamps();
         });
