@@ -11,7 +11,7 @@ return [
     | login page.
     |
     */
-    'name' => 'SlotAdmin',
+    'name' => 'SlotApi',
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<img src="/vendor/dcat-admin/images/logo.png" width="35"> &nbsp;SlotAdmin',
+    'logo' => '<img src="/vendor/dcat-admin/images/logo.png" width="35"> &nbsp;Dcat Admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -37,14 +37,22 @@ return [
     'logo-mini' => '<img src="/vendor/dcat-admin/images/logo.png">',
 
     /*
-     |--------------------------------------------------------------------------
-     | User default avatar
-     |--------------------------------------------------------------------------
-     |
-     | Set a default avatar for newly created users.
-     |
-     */
-    'default_avatar' => '@admin/images/default-avatar.jpg',
+    |--------------------------------------------------------------------------
+    | dcat-admin favicon
+    |--------------------------------------------------------------------------
+    |
+    */
+    'favicon' => null,
+
+    /*
+	 |--------------------------------------------------------------------------
+	 | User default avatar
+	 |--------------------------------------------------------------------------
+	 |
+	 | Set a default avatar for newly created users.
+	 |
+	 */
+	'default_avatar' => '@admin/images/default-avatar.jpg',
 
     /*
     |--------------------------------------------------------------------------
@@ -59,13 +67,11 @@ return [
     'route' => [
         'domain' => env('ADMIN_ROUTE_DOMAIN'),
 
-        'prefix' => env('ADMIN_ROUTE_PREFIX', 'admin'),
+        'prefix' => 'api',
 
-        'namespace' => 'App\\Admin\\Controllers',
+        'namespace' => 'App\\SlotApi\\Controllers',
 
-        'middleware' => ['web', 'admin'],
-
-        'enable_session_middleware' => false,
+        'middleware' => ['web'],
     ],
 
     /*
@@ -78,7 +84,7 @@ return [
     | be set before running `artisan admin::install` to take effect.
     |
     */
-    'directory' => app_path('Admin'),
+    'directory' => app_path('SlotApi'),
 
     /*
     |--------------------------------------------------------------------------
@@ -88,7 +94,7 @@ return [
     | Html title for all pages.
     |
     */
-    'title' => 'SlotAdmin',
+    'title' => 'Admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -122,19 +128,19 @@ return [
     'auth' => [
         'enable' => true,
 
-        'controller' => App\Admin\Controllers\AuthController::class,
+        'controller' => App\SlotApi\Controllers\AuthController::class,
 
-        'guard' => 'admin',
+        'guard' => 'slot-api',
 
         'guards' => [
-            'admin' => [
+            'slot-api' => [
                 'driver'   => 'session',
-                'provider' => 'admin',
+                'provider' => 'slot-api',
             ],
         ],
 
         'providers' => [
-            'admin' => [
+            'slot-api' => [
                 'driver' => 'eloquent',
                 'model'  => Dcat\Admin\Models\Administrator::class,
             ],
@@ -150,17 +156,39 @@ return [
             'auth/logout',
         ],
 
-        'enable_session_middleware' => false,
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | The global Grid setting
+    |--------------------------------------------------------------------------
+    */
     'grid' => [
 
-        /*
-        |--------------------------------------------------------------------------
-        | The global Grid action display class.
-        |--------------------------------------------------------------------------
-        */
+        // The global Grid action display class.
         'grid_action_class' => Dcat\Admin\Grid\Displayers\DropdownActions::class,
+
+        // The global Grid batch action display class.
+        'batch_action_class' => Dcat\Admin\Grid\Tools\BatchActions::class,
+
+        // The global Grid pagination display class.
+        'paginator_class' => Dcat\Admin\Grid\Tools\Paginator::class,
+
+        'actions' => [
+            'view' => Dcat\Admin\Grid\Actions\Show::class,
+            'edit' => Dcat\Admin\Grid\Actions\Edit::class,
+            'quick_edit' => Dcat\Admin\Grid\Actions\QuickEdit::class,
+            'delete' => Dcat\Admin\Grid\Actions\Delete::class,
+            'batch_delete' => Dcat\Admin\Grid\Tools\BatchDelete::class,
+        ],
+
+        // The global Grid column selector setting.
+        'column_selector' => [
+            'store' => Dcat\Admin\Grid\ColumnSelector\SessionStore::class,
+            'store_params' => [
+                'driver' => 'file',
+            ],
+        ],
     ],
 
     /*
@@ -211,6 +239,13 @@ return [
         // Whether enable menu bind to a permission.
         'bind_permission' => true,
 
+        // Whether enable role bind to menu.
+        'role_bind_menu' => true,
+
+        // Whether enable permission bind to menu.
+        'permission_bind_menu' => true,
+
+		'default_icon' => 'feather icon-circle',
     ],
 
     /*
@@ -269,8 +304,8 @@ return [
         'role_menu_table'        => 'admin_role_menu',
         'permission_menu_table'  => 'admin_permission_menu',
         'settings_table'         => 'admin_settings',
-        'extensions_table'       => 'admin_extensions',
-        'extension_histories_table' => 'admin_extension_histories',
+		'extensions_table'       => 'admin_extensions',
+		'extension_histories_table' => 'admin_extension_histories',
     ],
 
     /*
@@ -282,14 +317,17 @@ return [
     */
     'layout' => [
         // default, blue, blue-light, green
-        'color' => 'green',
+        'color' => 'default',
 
-        'body_class' => '',
+		// sidebar-separate
+        'body_class' => [],
+
+        'horizontal_menu' => false,
 
         'sidebar_collapsed' => false,
 
         // light, primary, dark
-        'sidebar_style' => 'light',
+		'sidebar_style' => 'light',
 
         'dark_mode_switch' => false,
 
@@ -313,26 +351,4 @@ return [
     | Whether enable default breadcrumb for every page content.
     */
     'enable_default_breadcrumb' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Extension
-    |--------------------------------------------------------------------------
-    */
-    'extension' => [
-        // When you use command `php artisan admin:ext-make` to generate extensions,
-        // the extension files will be generated in this directory.
-        'dir' => base_path('dcat-admin-extensions'),
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | multi_app 多应用模式
-    |--------------------------------------------------------------------------
-    */
-    'multi_app' => [
-        // 与新应用的配置文件名称一致
-        // 设置为true启用，false则是停用
-        'slot-api' => true,
-    ],
 ];
