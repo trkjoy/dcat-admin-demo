@@ -19,8 +19,8 @@ class AdminSetting extends Form implements LazyRenderable
     protected $colors = [
         'default'    => '深蓝',
         'blue'       => '蓝',
-//        'blue-light' => '浅蓝',
-//        'blue-dark'  => '深蓝',
+        'blue-light' => '浅蓝',
+        'blue-dark'  => '深蓝',
         'green'      => '绿',
     ];
 
@@ -66,7 +66,7 @@ class AdminSetting extends Form implements LazyRenderable
                 'sidebar-separate' => 'sidebar-separate',
             ])
             ->help('切换菜单布局');
-//        $this->switch('https', '启用HTTPS');
+        $this->switch('https', '启用HTTPS');
         $this->switch('helpers.enable', '开发工具');
     }
 
@@ -82,7 +82,7 @@ class AdminSetting extends Form implements LazyRenderable
         return <<<'JS'
     if (data.status) {
         setTimeout(function () {
-          location.reload()  
+          location.reload()
         }, 1200);
     }
 JS;
