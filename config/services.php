@@ -43,5 +43,11 @@ return [
             'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
         ],
     ],
-
+    //数据上報
+    'report'=>[
+        'model' => App\Libraries\HttpReportCurl::class,
+        'alias' => env('REPORT_ALIAS'),
+        'secret' => env('REPORT_SECRET'),
+        'host' => env('REPORT_HOST'),
+    ]
 ];
