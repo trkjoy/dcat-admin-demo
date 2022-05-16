@@ -44,8 +44,6 @@ Grid\Column::extend('code', function ($v) {
 Grid::resolving(function (Grid $grid) {
     if (! request('_row_')) {
         $grid->tableCollapse();
-
-
 //        $grid->tools(new App\Admin\Grid\Tools\SwitchGridMode());
     }
 });
@@ -62,37 +60,40 @@ Admin::navbar(function (Navbar $navbar) {
 //            'blue-dark' => '#5686d4',
 //        ],
 //    ]));
+
+
     $method = config('admin.layout.horizontal_menu') ? 'left' : 'right';
-
-    $navbar->$method(
-        <<<HTML
-<ul class="nav navbar-nav">
-    <li class="nav-item">
-        &nbsp;
-        <a style="cursor: pointer" onclick="window.open('https://github.com/jqhph/dcat-admin-demo')">
-            <i class="feather icon-github" style="font-size: 1.5rem"></i> DEMO源码下载
-        </a> 
-        &nbsp; &nbsp; 
-    </li>
-</ul> 
-HTML
-
-    );
+//    $navbar->$method(
+//        <<<HTML
+//<ul class="nav navbar-nav">
+//    <li class="nav-item">
+//        &nbsp;
+//        <a style="cursor: pointer" onclick="window.open('https://github.com/jqhph/dcat-admin-demo')">
+//            <i class="feather icon-github" style="font-size: 1.5rem"></i> DEMO源码下载
+//        </a>
+//        &nbsp; &nbsp;
+//    </li>
+//</ul>
+//HTML
+//
+//    );
 
     // ajax请求不执行
-    if (! Dcat\Admin\Support\Helper::isAjaxRequest()) {
+    if (!Dcat\Admin\Support\Helper::isAjaxRequest()) {
         $navbar->$method(App\Admin\Actions\AdminSetting::make()->render());
     }
 
-    // 下拉菜单
-    //$navbar->right(view('admin.navbar-2'));
-
-    // 搜索框
-    $navbar->right(
-        <<<HTML
-HTML
-    );
 
     // 下拉面板
     $navbar->right(view('admin.navbar-1'));
+    // 下拉菜单
+//    $navbar->right(view('admin.navbar-2'));
+
+    // 搜索框
+//    $navbar->right(
+//        <<<HTML
+//HTML
+//    );
+
+
 });
