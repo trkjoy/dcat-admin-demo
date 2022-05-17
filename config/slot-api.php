@@ -94,7 +94,7 @@ return [
     | Html title for all pages.
     |
     */
-    'title' => 'Admin',
+    'title' => 'Api',
 
     /*
     |--------------------------------------------------------------------------
@@ -280,7 +280,7 @@ return [
     'database' => [
 
         // Database connection for following tables.
-        'connection' => '',
+        'connection' => 'mysql_api',
 
         // User tables and model.
         'users_table' => 'admin_users',
