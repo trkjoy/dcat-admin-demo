@@ -4,14 +4,12 @@ namespace App\SlotApi\Controllers;
 
 use App\Events\ClientReportedEvent;
 use App\Http\Controllers\Controller;
-use Dcat\Admin\Traits\HasFormResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
-    use HasFormResponse;
 
     public function index(Request $request): JsonResponse
     {
@@ -32,7 +30,7 @@ class HomeController extends Controller
                 'event' => 'required',
             ],
             [
-                'required' => trans('admin.report.required'),
+                'required' => trans('admin.validation.required'),
             ]
         );
         if ($validator->fails()) {

@@ -134,7 +134,7 @@ return [
 
         'guards' => [
             'slot-api' => [
-                'driver'   => 'session',
+                'driver'   => 'jwt',
                 'provider' => 'slot-api',
             ],
         ],
@@ -142,7 +142,7 @@ return [
         'providers' => [
             'slot-api' => [
                 'driver' => 'eloquent',
-                'model'  => Dcat\Admin\Models\Administrator::class,
+                'model'  => App\Models\SlotGameUser::class,
             ],
         ],
 
