@@ -2,36 +2,44 @@
 
 namespace App\SlotApi\Controllers;
 
+use App\Events\ClientReportedEvent;
 use App\Http\Controllers\Controller;
-use Dcat\Admin\Layout\Content;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class HomeController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
-        $time = time();
-        dump([$request->all(),$time]);
-        dump([$request->url(),$time]);
-        return response()->json(['name' => 'Abigail', 'state' => 'CA','time'=>$time]);
-//        return $content
-//            ->header('Dashboard')
-//            ->description('Description...')
-//            ->body(function (Row $row) {
-//                $row->column(6, function (Column $column) {
-//                    $column->row(Dashboard::title());
-//                    $column->row(new Examples\Tickets());
-//                });
-//
-//                $row->column(6, function (Column $column) {
-//                    $column->row(function (Row $row) {
-//                        $row->column(6, new Examples\NewUsers());
-//                        $row->column(6, new Examples\NewDevices());
-//                    });
-//
-//                    $column->row(new Examples\Sessions());
-//                    $column->row(new Examples\ProductOrders());
-//                });
-//            });
+        return $this->success();
+    }
+
+    /**
+     * 游戏数据上报
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
+     */
+    public function report(Request $request): JsonResponse
+    {
+        $input = $this->validate($request,
+            [
+                'sourcetype' => 'required',
+                'event' => 'required',
+            ],
+            [
+                'required' => trans('admin.report.required'),
+            ]
+        );
+        $report = ['sourcetype' => $input['sourcetype']];
+        $input['event'] = explode(',', $input['event']);
+        array_walk($input['event'], function ($value) use (&$report) {
+            list($key, $value) = explode('=', $value);
+            $report[$key] = $value;
+        });
+        //異步上報數據
+        ClientReportedEvent::dispatch($report);
+        return $this->success();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -13,6 +14,7 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         //
+
     ];
 
     /**
@@ -49,6 +51,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, \Exception $exception)
     {
+        if ($exception instanceof ValidationException){
+            return response()->json([
+                'code' => $exception->getCode(),
+                'msg' => $exception->getMessage(),
+            ]);
+        }
         return parent::render($request, $exception);
     }
 }

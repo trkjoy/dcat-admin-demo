@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Events\ClientReportedEvent;
 use App\Events\GameReportedEvent;
 use App\Listeners\SendGameReportData;
 use Illuminate\Auth\Events\Registered;
@@ -20,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         GameReportedEvent::class =>[
+            SendGameReportData::class,
+        ],
+        ClientReportedEvent::class =>[
             SendGameReportData::class,
         ]
     ];

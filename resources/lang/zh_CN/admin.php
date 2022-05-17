@@ -226,6 +226,9 @@ return [
         'minlength' => ':attribute 字符长度不能少于 :min。',
         'maxlength' => ':attribute 字符长度不能超出 :max。',
     ],
+    'report'=>[
+        'required'     => ':attribute 不能为空',
+    ],
     //数据上报
     'report_alias_empty' =>'数据上报游戏别名未配置',
     'report_secret_empty'=>'数据上报密钥未配置',

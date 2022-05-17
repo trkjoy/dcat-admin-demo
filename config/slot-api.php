@@ -71,7 +71,7 @@ return [
 
         'namespace' => 'App\\SlotApi\\Controllers',
 
-        'middleware' => ['web'],
+        'middleware' => ['api'],
     ],
 
     /*

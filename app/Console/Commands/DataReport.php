@@ -83,7 +83,6 @@ class DataReport extends Command
             ],
         ];
         GameReportedEvent::dispatch($report);
-//        event(new GameReportedEvent($report));
         $this->info("已创建{$number}条数据！");
     }
 }
