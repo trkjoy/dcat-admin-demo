@@ -7,10 +7,12 @@ use Dcat\Admin\Admin;
 Admin::routes();
 
 Route::group([
-    'prefix'     => config('admin.route.prefix'),
-    'namespace'  => config('admin.route.namespace'),
+    'prefix' => config('admin.route.prefix'),
+    'namespace' => config('admin.route.namespace'),
     'middleware' => config('admin.route.middleware'),
 ], function (Router $router) {
-    $router->post('/', 'HomeController@index');
-    $router->post('/report', 'HomeController@report');
+    $router->group(['middleware'=>['refresh']], function (Router $router) {
+        $router->post('/', 'HomeController@index');
+        $router->post('/report', 'HomeController@report');
+    });
 });

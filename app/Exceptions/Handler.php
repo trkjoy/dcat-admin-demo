@@ -8,6 +8,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -59,12 +60,24 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'code' => 422,
                 'msg' => $exception->getMessage(),
+                'data'=>(object)[],
+                'timestamp' => time(),
             ]);
         }
         if ($exception instanceof AuthenticationException){
             return response()->json([
                 'code' => 401,
                 'msg' => $exception->getMessage(),
+                'data'=>(object)[],
+                'timestamp' => time(),
+            ]);
+        }
+        if ($exception instanceof UnauthorizedHttpException){
+            return response()->json([
+                'code' => 402,
+                'msg' => $exception->getMessage(),
+                'data'=>$exception->getHeaders(),
+                'timestamp' => time(),
             ]);
         }
         return parent::render($request, $exception);

@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
-
     public function index(Request $request): JsonResponse
     {
         return $this->success();
