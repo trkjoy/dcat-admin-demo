@@ -9,9 +9,9 @@
     "license": "MIT",
     "require": {
         "php": "^7.1.3",
-        "barryvdh/laravel-ide-helper": "^2.1",
+        "barryvdh/laravel-ide-helper": "*",
         "dcat/laravel-admin": "2.*",
-        "doctrine/dbal": " ~2.3",
+        "doctrine/dbal": "*",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^7.4",
         "hhxsv5/laravel-s": "~3.7.0",
