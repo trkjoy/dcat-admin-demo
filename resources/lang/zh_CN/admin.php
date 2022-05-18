@@ -222,14 +222,26 @@ return [
     'copied'                    => '已复制',
     'auth_failed'               => '账号或密码错误',
     'validation'               => [
+        'required'  => ':attribute 不能为空',
         'match'     => '与 :attribute 不匹配。',
         'minlength' => ':attribute 字符长度不能少于 :min。',
         'maxlength' => ':attribute 字符长度不能超出 :max。',
-        'required'  => ':attribute 不能为空',
+        'between'   => ':attribute 须在:min-:max个字符之间',
+        'unique' => ':attribute 值已经存在',
+        'email'  => 'email格式不正确',
+        'password'  =>[
+            'required' => '密码不能为空',
+            'confirmed'=> '密码与确认密码不一致',
+        ],
+        'register_unique' => '账号昵称或邮箱已存在',
     ],
     //数据上报
-    'report_alias_empty' =>'数据上报游戏别名未配置',
-    'report_secret_empty'=>'数据上报密钥未配置',
-    'report_host_empty'=>'数据上报地址未配置',
-    'report_data_empty'=>'数据上报数据未配置',
+    'report'=>[
+        'empty'=>[
+            'alias'=>'数据上报游戏别名未配置',
+            'secret'=>'数据上报密钥未配置',
+            'host'=>'数据上报地址未配置',
+            'data'=>'数据上报数据未配置',
+        ]
+    ],
 ];

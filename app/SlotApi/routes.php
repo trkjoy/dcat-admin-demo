@@ -11,6 +11,7 @@ Route::group([
     'namespace' => config('admin.route.namespace'),
     'middleware' => config('admin.route.middleware'),
 ], function (Router $router) {
+    $router->post('/auth/register', 'AuthController@postRegister');
     $router->group(['middleware'=>['refresh']], function (Router $router) {
         $router->post('/', 'HomeController@index');
         $router->post('/report', 'HomeController@report');

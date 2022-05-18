@@ -36,19 +36,19 @@ class HttpReportCurl implements IHttpCurl
     public function verify(array $data): bool
     {
         if ($this->alias == null){
-            $this->error = trans('admin.report_alias_empty');
+            $this->error = trans('admin.report.empty.alias');
             return false;
         }
         if ($this->secret == null){
-            $this->error = trans('admin.report_secret_empty');
+            $this->error = trans('admin.report.empty.secret');
             return false;
         }
         if ($this->host == null){
-            $this->error = trans('admin.report_host_empty');
+            $this->error = trans('admin.report.empty.host');
             return false;
         }
         if ($data == null){
-            $this->error = trans('admin.report_data_empty');
+            $this->error = trans('admin.report.empty.data');
             return false;
         }
         $this->data = $data;
