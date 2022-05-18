@@ -3,7 +3,6 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use Dcat\Admin\Controllers\HasResourceActions;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Layout\Content;
@@ -11,8 +10,6 @@ use Dcat\Admin\Show;
 
 class ExampleController extends Controller
 {
-    use HasResourceActions;
-
     /**
      * Index interface.
      *

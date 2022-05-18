@@ -13,8 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        //加载配置
         require_once __DIR__.'/../helpers.php';
+        if ($this->app->environment() !== 'production'){
+            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+        }
     }
 
     /**
